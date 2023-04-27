@@ -1,12 +1,12 @@
 import { Router } from "express";
-// import passport from 'passport';
+import passport from 'passport';
 // import userModel from "../dao/models/user.js";
 import {postRegister,failLogin, postLogin, failRegister, getLogout, getGitHub ,getGitHubCallback} from '../controllers/sessionController.js'
 
 const router = Router();
 
 
-router.post('/register', postRegister);
+router.post('/register', passport.authenticate('register', { failureRedirect: 'fail-register' }),postRegister);
 // passport.authenticate('register', { failureRedirect: 'fail-register' }), async (req, res) => {
 //     res.send({ status: 'success', message: 'User registered' })
 router.get('/fail-login', failLogin);
@@ -34,10 +34,10 @@ router.get('/logout', getLogout);
     //     res.redirect('/products');
     // })
 
-router.get('/github', getGitHub);
+router.get('/github',passport.authenticate('github', { scope: ['user:email'] }) ,getGitHub);
 // passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
 //     res.send({ status: 'succes', message:'user Registered'});
-router.get('/github-callback', getGitHubCallback )
+router.get('/github-callback',passport.authenticate('github', { failureRedirect: '/login' }) ,getGitHubCallback )
 // passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
 //     req.session.user = {
 //         name: `${req.user.first_name} ${req.user.last_name}`,

@@ -20,7 +20,7 @@ const port = config.port
 
 //INICIALIZAMOS EXPRESS
 const app = express(); //TRAEMOS EXPRESS
-const httpServer =  app.listen(port, console.log("Server activado")) //levantamos el servido
+const httpServer =  app.listen(port, console.log(`Server activado, puerto:  ${port}`)) //levantamos el servido
 const socketServer = new Server(httpServer); //creamos un servidor con websocket 
 
 // mongoose.set("strictQuery", false);
